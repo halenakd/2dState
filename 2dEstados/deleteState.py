@@ -10,19 +10,17 @@ import wx
 import wx.glcanvas as wxgl
 
 # ========================================================
-# IdleState - ESTADO DE ESPERA
+# DeleteState - ESTADO DE APAGAR OBJETOS
 # ========================================================
-# é o estado inicial do programa, de espera e de seleção
-# permite selecionar objetos, levando ao estado de Selecionado
+# possibilita apagar objetos clicando em cima deles
 
-
-class IdleState(State):
+class DeleteState(State):
     def __init__(self, manageStates):
         super().__init__(manageStates)
 
 
     # ========================================================
-    # selectObject - permite saber se o click foi dentro ou fora do objeto (atualiza o status de obj.selected)
+    # SelectObject - verifica se clico em cima do objeto e, se sim, apaga ele
     # ========================================================
 
     def selectObject(self, x, y):
@@ -39,56 +37,49 @@ class IdleState(State):
                     x_int = (y - obj.points[i][1]) * (obj.points[iMaisUm][0] - obj.points[i][0]) / (obj.points[iMaisUm][1] - obj.points[i][1]) + obj.points[i][0]
                     y_int = y
                     if x_int == x:
-                        obj.selected = True
-                        print(obj.selected)
-                        self.manageStates.setState(self.manageStates.getSelectedState())
+                        self.manageStates.objects.remove(obj)
                         break
                     else:
                         if x_int > x and y_int > min(obj.points[i][1], obj.points[iMaisUm][1]) and y_int <= max(obj.points[i][1], obj.points[iMaisUm][1]):
                             N_int += 1
                 else:
                     if y == obj.points[i][1] and x >= min(obj.points[i][0], obj.points[iMaisUm][0]) and x <= max(obj.points[i][0], obj.points[iMaisUm][0]):
-                        obj.selected = True
-                        print(obj.selected)
-                        self.manageStates.setState(self.manageStates.getSelectedState())
+                        self.manageStates.objects.remove(obj)
                         break
 
             if (N_int % 2) != 0:
-                obj.selected = True
-                print(obj.selected)
-                self.manageStates.setState(self.manageStates.getSelectedState())
+                self.manageStates.objects.remove(obj)
             else:
                 obj.selected = False
 
 
     # ========================================================
-    # CALLBACKS - MOUSE
+    # CALLBACK - MOUSE
     # ========================================================
 
     # click do mouse quando pressiona e quando solta
     def MouseClick(self, event, x, y):
         if event.LeftDown():
-            print("IdleState - MouseClick(LeftDown)")
+            print("DeleteState - MouseClick(LeftDown)")
+            pass
 
         elif event.LeftUp():
-            print("IdleState - MouseClick(LeftUp)")
+            print("DeleteState - MouseClick(LeftUp)")
             self.selectObject(x, y)
 
     # mouse em movimento pressionado
     def MouseMotion(self, x, y):
-        print("IdleState - MouseMotion")
         pass
-
+    
     # mouse em movimento solto
     def MousePassiveMotion(self, x, y):
-        print("IdleState - MousePassiveMotion")
         pass
 
+    # roda do mouse
     def onMouseWheel(self, event):
-        print("IdleState - onMouseWheel")
+        print("DeleteState - onMouseWheel")
         if self.ctrl_pressed:
             rotation = event.GetWheelRotation()
-            # Invertendo a direção do zoom
             self.manageStates.zoom -= rotation / event.GetWheelDelta() * 0.1
 
 
@@ -97,6 +88,6 @@ class IdleState(State):
     # ========================================================
 
     def draw(self):
-        print("IdleState - draw")
+        print("DeleteState - draw")
         super().draw()
     

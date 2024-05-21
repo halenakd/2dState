@@ -10,8 +10,16 @@ from selectedState import SelectedState
 from squareState import SquareState
 from circleState import CircleState
 from polygonState import PolygonState
+from deleteState import DeleteState
 import wx
 import wx.glcanvas as wxgl
+
+# ========================================================
+# Classe ManageStates 
+# ========================================================
+# faz o gerenciamento dos estados
+# guarda o estado atual e tem as funções necessárias para trocar de estado (setState e gets)
+# também guarda algumas variáveis utilizadas no programa todos
 
 class ManageStates:
     def __init__(self, color, lineWidth, objects):
@@ -21,8 +29,7 @@ class ManageStates:
         self.objects = objects
         self.canvas = None
         self.zoom = 1.0
-        self.width = 800
-        self.height = 600
+        self.ctrl_pressed = False
 
         # iniciando estados
         self.idleState = IdleState(self)
@@ -31,12 +38,18 @@ class ManageStates:
         self.squareState = SquareState(self)
         self.circleState = CircleState(self)
         self.polygonState = PolygonState(self)
+        self.deleteState = DeleteState(self)
 
+        # setando o estado inicial como estado atual
         self.currentState = self.idleState
-    
+
+    # função que seta o estado passado como parâmetro como o estado atual
     def setState(self, state):
         self.currentState = state
 
+    # funções de get dos estados - retornam o estado desejado
+    # seus retornos são utilizados como parâmetro na função setState
+    # ex.: setState(getTriangleState())
     def getIdleState(self):
         return self.idleState
 
@@ -54,3 +67,6 @@ class ManageStates:
     
     def getPolygonState(self):
         return self.polygonState
+    
+    def getDeleteState(self):
+        return self.deleteState

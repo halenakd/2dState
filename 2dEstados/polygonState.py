@@ -8,13 +8,21 @@ from state import State
 from geometries import Object
 import wx
 
-currentPoints = []
-
+# controle de estados dentro do estado de triângulo
 class States(Enum):
     INIT_DRAW = 1
     FINISH_DRAW = 2
 
+# estado inicial de desenho
 currentState = States.INIT_DRAW
+
+currentPoints = []
+
+# ========================================================
+# PolygonState - ESTADO DE DESENHAR POLÍGONO
+# ========================================================
+# possibilita desenhar um polígono e ver o desenho em tempo real
+# no fim, o polígono é adicionado à lista de objetos do programa
 
 class PolygonState(State):
     def __init__(self, manageStates):
@@ -23,7 +31,7 @@ class PolygonState(State):
 
 
     # ========================================================
-    # CALLBACK - MOUSE
+    # CALLBACKS - mouse
     # ========================================================
 
     # click do mouse quando pressiona e quando solta
@@ -32,16 +40,16 @@ class PolygonState(State):
         poligono = Object("polygon", self.manageStates.color, self.manageStates.style, self.manageStates.lineWidth)
 
         if event.LeftDown():
-            print("Clicou tri")   
+            print("PolygonState - MouseClick(LeftDown)")
 
         elif event.LeftUp():
-            print("Soltou tri")
+            print("PolygonState - MouseClick(LeftUp)")
 
             if len(currentPoints) > 2:
                 if (np.sqrt((currentPoints[0][0] - x)**2 + (currentPoints[0][1] - y)**2)) < 0.1:
                     poligono.points = currentPoints
                     poligono.selected = True
-                    self.objects.append(poligono)
+                    self.manageStates.objects.append(poligono)
                     currentPoints = []
                     self.manageStates.setState(self.manageStates.getIdleState())
                 else:
@@ -49,14 +57,15 @@ class PolygonState(State):
             else:
                 currentPoints.append((x, y))
 
-
     # mouse em movimento pressionado
     def MouseMotion(self, x, y):
-        #print("Movendo pressionado")
+        print("PolygonState - MouseMotion")
         pass
 
     # mouse em movimento solto
     def MousePassiveMotion(self, x, y):
+        print("PolygonState - MousePassiveMotion")
+
         global currentState, currentPoints
 
         tempPoints = currentPoints.copy()
@@ -65,7 +74,20 @@ class PolygonState(State):
 
         self.tempPolygon.points = tempPoints
 
+    # roda do mouse
+    def onMouseWheel(self, event):
+        print("CircleState - onMouseWheel")
+        if self.ctrl_pressed:
+            rotation = event.GetWheelRotation()
+            self.manageStates.zoom -= rotation / event.GetWheelDelta() * 0.1
+
+
+    # ========================================================
+    # DRAW - desenhos
+    # ========================================================
+
     def draw(self):
+        print("PolygonState - draw")
         super().draw()
         self.tempPolygon.drawTemp()
 

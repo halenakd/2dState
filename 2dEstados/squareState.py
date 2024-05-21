@@ -57,7 +57,7 @@ class SquareState(State):
                 # todos os pontos
                 quadrado.points = currentPoints
                 quadrado.selected = True
-                self.objects.append(quadrado)
+                self.manageStates.objects.append(quadrado)
                 self.tempSquare.points = []
 
                 currentState = States.INIT_DRAW

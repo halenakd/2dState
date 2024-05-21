@@ -8,14 +8,22 @@ from state import State
 from geometries import Object
 import wx
 
-currentPoints = []
-center = (0, 0)
-
+# controle de estados dentro do estado de círculo
 class States(Enum):
     INIT_DRAW = 1
     FINISH_DRAW = 2
 
+# estado inicial de desenho
 currentState = States.INIT_DRAW
+
+currentPoints = []
+center = (0, 0)
+
+# ========================================================
+# CircleState - ESTADO DE DESENHAR CÍRCULO
+# ========================================================
+# possibilita desenhar um círculo e ver o desenho em tempo real
+# no fim, o círculo é adicionado à lista de objetos do programa
 
 class CircleState(State):
     def __init__(self, manageStates):
@@ -24,7 +32,7 @@ class CircleState(State):
 
 
     # ========================================================
-    # CALLBACK - MOUSE
+    # CALLBACKS - MOUSE
     # ========================================================
 
     # click do mouse quando pressiona e quando solta
@@ -33,18 +41,16 @@ class CircleState(State):
         circulo = Object("circle", self.manageStates.color, self.manageStates.style, self.manageStates.lineWidth)
 
         if event.LeftDown():
+            print("CircleState - MouseClick(LeftDown)")
             pass
 
         elif event.LeftUp():
-
+            print("CircleState - MouseClick(LeftUp)")
             if currentState == States.INIT_DRAW:
-                # centro
                 center = (x, y)
-                print("centro:", circulo.center, center)
 
                 currentState = States.FINISH_DRAW
             elif currentState == States.FINISH_DRAW:
-                # raio
                 raio = np.sqrt((center[0] - x)**2 + (center[1] - y)**2)
 
                 ang = 0.0
@@ -55,11 +61,10 @@ class CircleState(State):
                     ang += 360/PONTOS
                     currentPoints.append((xc, yc))
 
-                # todos os pontos
                 circulo.points = currentPoints
                 circulo.center = center
                 circulo.selected = True
-                self.objects.append(circulo)
+                self.manageStates.objects.append(circulo)
                 self.tempCircle.points = []
 
                 currentState = States.INIT_DRAW
@@ -70,11 +75,12 @@ class CircleState(State):
 
     # mouse em movimento pressionado
     def MouseMotion(self, x, y):
-        #print("Movendo pressionado")
+        print("CircleState - MouseMotion")
         pass
 
     # mouse em movimento solto
     def MousePassiveMotion(self, x, y):
+        print("CircleState - MousePassiveMotion")
 
         global currentState, currentPoints
 
@@ -92,10 +98,22 @@ class CircleState(State):
                 ang += 360/PONTOS
                 tempPoints.append((x, y))
 
-            # Atualize os pontos do triângulo temporário
             self.tempCircle.points = tempPoints
 
+    # roda do mouse
+    def onMouseWheel(self, event):
+        print("CircleState - onMouseWheel")
+        if self.ctrl_pressed:
+            rotation = event.GetWheelRotation()
+            self.manageStates.zoom -= rotation / event.GetWheelDelta() * 0.1
+
+
+    # ========================================================
+    # DRAW - desenhos
+    # ========================================================
+
     def draw(self):
+        print("CircleState - Draw") 
         super().draw()
         self.tempCircle.draw()
 
