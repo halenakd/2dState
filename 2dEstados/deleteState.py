@@ -24,6 +24,7 @@ class DeleteState(State):
     # ========================================================
 
     def selectObject(self, x, y):
+        print("DeleteState - selectObject")
         for obj in self.manageStates.objects:
             N_int = 0
             for i in range(len(obj.points)):
@@ -69,10 +70,12 @@ class DeleteState(State):
 
     # mouse em movimento pressionado
     def MouseMotion(self, x, y):
+        print("DeleteState - MouseMotion")
         pass
     
     # mouse em movimento solto
     def MousePassiveMotion(self, x, y):
+        print("DeleteState - MousePassiveMotion")
         pass
 
     # roda do mouse

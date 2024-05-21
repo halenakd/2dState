@@ -107,6 +107,7 @@ class TriangleState(State):
             rotation = event.GetWheelRotation()
             self.manageStates.zoom -= rotation / event.GetWheelDelta() * 0.1
 
+
     # ========================================================
     # DRAW - desenhos
     # ========================================================
@@ -115,4 +116,3 @@ class TriangleState(State):
         print("TriangleState - Draw") 
         super().draw()
         self.tempTriangle.draw()
-

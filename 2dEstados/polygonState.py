@@ -8,16 +8,6 @@ from state import State
 from geometries import Object
 import wx
 
-# controle de estados dentro do estado de triângulo
-class States(Enum):
-    INIT_DRAW = 1
-    FINISH_DRAW = 2
-
-# estado inicial de desenho
-currentState = States.INIT_DRAW
-
-currentPoints = []
-
 # ========================================================
 # PolygonState - ESTADO DE DESENHAR POLÍGONO
 # ========================================================
@@ -76,7 +66,7 @@ class PolygonState(State):
 
     # roda do mouse
     def onMouseWheel(self, event):
-        print("CircleState - onMouseWheel")
+        print("PolygonState - onMouseWheel")
         if self.ctrl_pressed:
             rotation = event.GetWheelRotation()
             self.manageStates.zoom -= rotation / event.GetWheelDelta() * 0.1

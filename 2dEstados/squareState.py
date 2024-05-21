@@ -8,13 +8,21 @@ from state import State
 from geometries import Object
 import wx
 
-currentPoints = []
-
+# controle de estados dentro do estado de triângulo
 class States(Enum):
     INIT_DRAW = 1
     FINISH_DRAW = 2
 
+# estado inicial de desenho
 currentState = States.INIT_DRAW
+
+currentPoints = []
+
+# ========================================================
+# SquareState - ESTADO DE DESENHAR QUADRADO
+# ========================================================
+# possibilita desenhar um quadrado e ver o desenho em tempo real
+# no fim, o quadrado é adicionado à lista de objetos do programa
 
 class SquareState(State):
     def __init__(self, manageStates):
@@ -23,7 +31,7 @@ class SquareState(State):
 
 
     # ========================================================
-    # CALLBACK - MOUSE
+    # CALLBACKS - MOUSE
     # ========================================================
 
     # click do mouse quando pressiona e quando solta
@@ -32,9 +40,11 @@ class SquareState(State):
         quadrado = Object("square", self.manageStates.color, self.manageStates.style, self.manageStates.lineWidth)
 
         if event.LeftDown():
+            print("SquareState - MouseClick(LeftDown)")
             pass
 
         elif event.LeftUp():
+            print("SquareState - MouseClick(LeftUp)")
 
             if currentState == States.INIT_DRAW:
                 # primeiro ponto
@@ -60,20 +70,24 @@ class SquareState(State):
                 self.manageStates.objects.append(quadrado)
                 self.tempSquare.points = []
 
-                currentState = States.INIT_DRAW
-
                 currentPoints = []
 
+                # se o estado geral do progama continuasse no de triângulo, 
+                # o estado dentro do estado de triângulo deveria voltar ao inicial,
+                # para que mais triângulos pudessem ser desenhados
+                #currentState = States.INIT_DRAW
+
+                # troca o estado geral do programa para o estado de "espera"
                 self.manageStates.setState(self.manageStates.getIdleState())
 
     # mouse em movimento pressionado
     def MouseMotion(self, x, y):
-        #print("Movendo pressionado")
+        print("SquareState - MouseMotion")
         pass
 
     # mouse em movimento solto
     def MousePassiveMotion(self, x, y):
-        #print("Movendo solto")
+        print("SquareState - MousePassiveMotion")
 
         global currentState, currentPoints
 
@@ -90,9 +104,20 @@ class SquareState(State):
 
             self.tempSquare.points = tempPoints
 
+    # roda do mouse
+    def onMouseWheel(self, event):
+        print("SquareState - onMouseWheel")
+        if self.ctrl_pressed:
+            rotation = event.GetWheelRotation()
+            self.manageStates.zoom -= rotation / event.GetWheelDelta() * 0.1
 
-    
+
+    # ========================================================
+    # DRAW - desenhos
+    # ========================================================
+
     def draw(self):
+        print("SquareState - Draw") 
         super().draw()
         self.tempSquare.draw()
 

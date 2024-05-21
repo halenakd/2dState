@@ -69,6 +69,7 @@ class IdleState(State):
     def MouseClick(self, event, x, y):
         if event.LeftDown():
             print("IdleState - MouseClick(LeftDown)")
+            pass
 
         elif event.LeftUp():
             print("IdleState - MouseClick(LeftUp)")
@@ -84,6 +85,7 @@ class IdleState(State):
         print("IdleState - MousePassiveMotion")
         pass
 
+    # roda do mouse
     def onMouseWheel(self, event):
         print("IdleState - onMouseWheel")
         if self.ctrl_pressed:

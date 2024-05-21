@@ -84,6 +84,10 @@ class SelectedState(State):
                 obj.primeiro = (x, y)
                 obj.previousPoints = obj.points
 
+    # ========================================================
+    # CALLBACKS - mouse
+    # ========================================================
+
     def MouseClick(self, event, x, y):
         if event.LeftDown():
             self.handles = []
@@ -95,10 +99,18 @@ class SelectedState(State):
         elif event.LeftUp():
             self.selectObject(x, y)
 
+    # mouse em movimento pressionado
     def MouseMotion(self, x, y):
         for obj in self.manageStates.objects:
                 if obj.selected:
                     self.Translate(x, y)
+
+    # roda do mouse
+    def onMouseWheel(self, event):
+        print("TriangleState - onMouseWheel")
+        if self.ctrl_pressed:
+            rotation = event.GetWheelRotation()
+            self.manageStates.zoom -= rotation / event.GetWheelDelta() * 0.1
 
     def calculate_handles(self, obj):
         # Calcula o centro da forma
@@ -112,6 +124,11 @@ class SelectedState(State):
             midpoint_x = (obj.points[i][0] + next_point[0]) / 2
             midpoint_y = (obj.points[i][1] + next_point[1]) / 2
             self.handles.append(Handle(midpoint_x, midpoint_y))
+
+
+    # ========================================================
+    # DRAW - desenhos
+    # ========================================================
 
     def drawHandles(self):
         for handle in self.handles:
