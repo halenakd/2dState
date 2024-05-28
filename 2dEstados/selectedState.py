@@ -6,7 +6,6 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 from state import State
 from geometries import Object
-from geometries import Circle
 import wx
 import wx.glcanvas as wxgl
 

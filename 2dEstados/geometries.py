@@ -89,10 +89,10 @@ class Object:
 
         return (center_x, center_y)
     
-    def calculate_area(self):
+    def calculateArea(self):
         if self.type == "triangle":
-            dx = self.points[1][0] - self.points[2][1]
-            dy = self.points[1][0] - self.points[2][1]
+            dx = self.points[1][0] - self.points[2][0]
+            dy = self.points[1][1] - self.points[2][1]
             base = np.sqrt(dx**2 + dy**2)
             altura = abs(self.points[0][1] - self.points[1][1])
             area = (base * altura) / 2
@@ -102,14 +102,20 @@ class Object:
             area = dx * dy
         elif self.type == "polygon":
             area = 0
+            n = len(self.points)
+            for i in range(n):
+                x1, y1 = self.points[i]
+                x2, y2 = self.points[(i + 1) % n]
+                area += x1 * y2 - x2 * y1
+            area = abs(area) / 2.0
         elif self.type == "circle":
-            area = 0
-            #base = np.sqrt(dx**2 + dy**2)
-            #altura = abs(self.points[0][1] - self.points[1][1])
-            #area = dx * dy
+            dx = self.center[0] - self.points[0][0]
+            dy = self.center[1] - self.points[0][1]
+            raio = np.sqrt(dx**2 + dy**2)
+            area = math.pi * raio**2
         return area
     
-    def calculate_perimeter(self):
+    def calculatePerimeter(self):
         perimeter = 0
         num_points = len(self.points)
         for i, point in enumerate(self.points):
@@ -123,30 +129,3 @@ class Object:
             perimeter += math.sqrt(dx**2 + dy**2)
 
         return perimeter
-    
-
-"""class Circle:
-    def __init__(self, center, radius, segments):
-        self.center = center
-        self.radius = radius
-        self.segments = segments
-        self.rotation_angle = 0  # Inicializa o ângulo de rotação acumulado como 0
-
-    def set_rotation_angle(self, angle):
-        self.rotation_angle = angle
-
-    def rotate(self, angle):
-        self.rotation_angle += angle
-
-    def draw(self):
-        glPushMatrix()
-        glTranslatef(self.center[0], self.center[1], 0.0)
-        glRotatef(math.degrees(self.rotation_angle), 0, 0, 1)  # Rotaciona em torno do eixo Z
-        glBegin(GL_LINE_LOOP)
-        for i in range(self.segments):
-            theta = 2.0 * math.pi * i / self.segments
-            x = self.radius * math.cos(theta)
-            y = self.radius * math.sin(theta)
-            glVertex2f(x, y)
-        glEnd()
-        glPopMatrix()"""

@@ -5,7 +5,6 @@ import numpy as np
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from geometries import Object
-from geometries import Circle
 from state import State
 from manageStates import ManageStates
 
@@ -165,7 +164,7 @@ class MyGLCanvas(glcanvas.GLCanvas):
     def onMouseWheel(self, event):
         self.manageStates.currentState.onMouseWheel(event)
         self.Refresh()
-
+        
 
     # ========================================================
     # normalizar - normaliza as coordenadas ([-1, 1])

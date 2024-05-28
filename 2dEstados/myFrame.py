@@ -5,7 +5,6 @@ import numpy as np
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from geometries import Object
-from geometries import Circle
 from state import State
 from manageStates import ManageStates
 from myGLCanvas import MyGLCanvas
@@ -61,7 +60,7 @@ class MyFrame(wx.Frame):
         # define a cor do botão
         self.selectButton.SetBackgroundColour(wx.Colour(220, 220, 220))
         # carrega a imagem como um bitmap no formato de png
-        selectIcon = wx.Bitmap("icons/cursor.png", wx.BITMAP_TYPE_PNG)
+        selectIcon = wx.Bitmap("C:/Users/halen/Downloads/ComputacaoGrafica/2dEstados/icons/cursor.png", wx.BITMAP_TYPE_PNG)
         # pega as dimensões da imagem
         width, height = selectIcon.GetSize()
         # converte pra um objeto, redimensiona e converte de volta para bitmap
@@ -76,7 +75,7 @@ class MyFrame(wx.Frame):
         # BOTÃO BORRACHA
         self.eraserButton = wx.Button(self.buttons_panel, style=wx.BU_EXACTFIT | wx.NO_BORDER)
         self.eraserButton.SetBackgroundColour(wx.Colour(220, 220, 220))
-        eraserIcon = wx.Bitmap("icons/borracha.png", wx.BITMAP_TYPE_PNG)
+        eraserIcon = wx.Bitmap("C:/Users/halen/Downloads/ComputacaoGrafica/2dEstados/icons/borracha.png", wx.BITMAP_TYPE_PNG)
         width, height = eraserIcon.GetSize()
         eraserIcon = eraserIcon.ConvertToImage().Rescale(width//2, height//2).ConvertToBitmap()
         self.eraserButton.SetBitmap(eraserIcon)
@@ -86,7 +85,7 @@ class MyFrame(wx.Frame):
         # BOTÃO PREENCHER
         self.fillButton = wx.Button(self.buttons_panel, style=wx.BU_EXACTFIT | wx.NO_BORDER)
         self.fillButton.SetBackgroundColour(wx.Colour(220, 220, 220))
-        fillIcon = wx.Bitmap("icons/latatinta.png", wx.BITMAP_TYPE_PNG)
+        fillIcon = wx.Bitmap("C:/Users/halen/Downloads/ComputacaoGrafica/2dEstados/icons/latatinta.png", wx.BITMAP_TYPE_PNG)
         width, height = fillIcon.GetSize()
         fillIcon = fillIcon.ConvertToImage().Rescale(width//2, height//2).ConvertToBitmap()
         self.fillButton.SetBitmap(fillIcon)
@@ -96,7 +95,7 @@ class MyFrame(wx.Frame):
         # BOTÃO TRIÂNGULO
         self.triangleButton = wx.Button(self.buttons_panel, style=wx.BU_EXACTFIT | wx.NO_BORDER)
         self.triangleButton.SetBackgroundColour(wx.Colour(220, 220, 220))
-        triangleIcon = wx.Bitmap("icons/triangulo.png", wx.BITMAP_TYPE_PNG)
+        triangleIcon = wx.Bitmap("C:/Users/halen/Downloads/ComputacaoGrafica/2dEstados/icons/triangulo.png", wx.BITMAP_TYPE_PNG)
         width, height = triangleIcon.GetSize()
         triangleIcon = triangleIcon.ConvertToImage().Rescale(width//2, height//2).ConvertToBitmap()
         self.triangleButton.SetBitmap(triangleIcon)
@@ -106,7 +105,7 @@ class MyFrame(wx.Frame):
         # BOTÃO QUADRADO
         self.squareButton = wx.Button(self.buttons_panel, style=wx.BU_EXACTFIT | wx.NO_BORDER)
         self.squareButton.SetBackgroundColour(wx.Colour(220, 220, 220))
-        squareIcon = wx.Bitmap("icons/quadrado.png", wx.BITMAP_TYPE_PNG)
+        squareIcon = wx.Bitmap("C:/Users/halen/Downloads/ComputacaoGrafica/2dEstados/icons/quadrado.png", wx.BITMAP_TYPE_PNG)
         width, height = squareIcon.GetSize()
         squareIcon = squareIcon.ConvertToImage().Rescale(width//2, height//2).ConvertToBitmap()
         self.squareButton.SetBitmap(squareIcon)
@@ -116,7 +115,7 @@ class MyFrame(wx.Frame):
         # BOTÃO CÍRCULO
         self.circleButton = wx.Button(self.buttons_panel, style=wx.BU_EXACTFIT | wx.NO_BORDER)
         self.circleButton.SetBackgroundColour(wx.Colour(220, 220, 220))
-        circleIcon = wx.Bitmap("icons/circulo.png", wx.BITMAP_TYPE_PNG)
+        circleIcon = wx.Bitmap("C:/Users/halen/Downloads/ComputacaoGrafica/2dEstados/icons/circulo.png", wx.BITMAP_TYPE_PNG)
         width, height = circleIcon.GetSize()
         circleIcon = circleIcon.ConvertToImage().Rescale(width//2, height//2).ConvertToBitmap()
         self.circleButton.SetBitmap(circleIcon)
@@ -126,7 +125,7 @@ class MyFrame(wx.Frame):
         # BOTÃO POLÍGONO
         self.polygonButton = wx.Button(self.buttons_panel, style=wx.BU_EXACTFIT | wx.NO_BORDER)
         self.polygonButton.SetBackgroundColour(wx.Colour(220, 220, 220))
-        polygonIcon = wx.Bitmap("icons/poligono.png", wx.BITMAP_TYPE_PNG)
+        polygonIcon = wx.Bitmap("C:/Users/halen/Downloads/ComputacaoGrafica/2dEstados/icons/poligono.png", wx.BITMAP_TYPE_PNG)
         width, height = polygonIcon.GetSize()
         polygonIcon = polygonIcon.ConvertToImage().Rescale(width//2, height//2).ConvertToBitmap()
         self.polygonButton.SetBitmap(polygonIcon)
@@ -146,7 +145,7 @@ class MyFrame(wx.Frame):
         # BOTÃO PARA ABRIR A CAIXA DE DIÁLOGO DE SELEÇÃO DE CORES
         self.colorsButton = wx.Button(self.buttons_panel, style=wx.BU_EXACTFIT | wx.NO_BORDER)
         self.colorsButton.SetBackgroundColour(wx.Colour(220, 220, 220))
-        colorsIcon = wx.Bitmap("icons/cores.png", wx.BITMAP_TYPE_PNG)
+        colorsIcon = wx.Bitmap("C:/Users/halen/Downloads/ComputacaoGrafica/2dEstados/icons/cores.png", wx.BITMAP_TYPE_PNG)
         width, height = colorsIcon.GetSize()
         colorsIcon = colorsIcon.ConvertToImage().Rescale(60, 60).ConvertToBitmap()
         self.colorsButton.SetBitmap(colorsIcon)
