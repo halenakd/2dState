@@ -81,9 +81,6 @@ class DeleteState(State):
     # roda do mouse
     def onMouseWheel(self, event):
         print("DeleteState - onMouseWheel")
-        if self.ctrl_pressed:
-            rotation = event.GetWheelRotation()
-            self.manageStates.zoom -= rotation / event.GetWheelDelta() * 0.1
 
 
     # ========================================================

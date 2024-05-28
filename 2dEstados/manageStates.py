@@ -29,7 +29,7 @@ class ManageStates:
         self.objects = objects
         self.canvas = None
         self.zoom = 1.0
-        self.ctrl_pressed = False
+        self.ctrl_pressed = True
 
         # iniciando estados
         self.idleState = IdleState(self)

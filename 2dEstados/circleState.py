@@ -103,9 +103,6 @@ class CircleState(State):
     # roda do mouse
     def onMouseWheel(self, event):
         print("CircleState - onMouseWheel")
-        if self.ctrl_pressed:
-            rotation = event.GetWheelRotation()
-            self.manageStates.zoom -= rotation / event.GetWheelDelta() * 0.1
 
 
     # ========================================================

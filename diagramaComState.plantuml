@@ -1,0 +1,106 @@
+
+@startuml Diagrama
+
+    class ManageStates{
+        +color: tuple
+        +lineWidth: int
+        +style: str
+        +objects: list<objects>
+        +canvas: NoneType
+        +zoom: float
+        +ctrl_pressed: bool
+        +idleState: IdleState       
+        +selectedState: SelectedState
+        +triangleState: TriangleState  
+        +squareState: SquareState   
+        +circleState: CircleState    
+        +polygonState: PolygonState   
+        +deleteState: DeleteState
+        +currentState: IdleState
+
+        +_init_(color: tuple, lineWidth: int, objects: list<objects>): void
+        +setState(state: IdleState): void 
+        +getIdleState(): IdleState
+        +getSelectedState(): SelectedState
+        +getTriangleState(): TriangleState
+        +getSquareState(): SquareState
+        +getCircleState(): CircleState
+        +getPolygonState(): PolygonState
+        +getDeleteState(): DeleteState
+    }
+
+    class State{
+        +manageStates: ManageStates
+
+        +_init_(manageStates: ManageStates): void
+        +MouseClick(event: wx.MouseEvent, x: int, y: int): void
+        +MouseMotion(x: int, y: int): void  
+        +MousePassiveMotion(x: int, y: int): void
+        +onMouseWheel(event: wx.MouseEvent): void
+        +draw(): void
+    }
+
+    class DeleteState{
+        +manageStates: ManageStates
+
+        +_init_(manageStates: ManageStates): void
+        +selectObject(x: int, y: int): void
+        +MouseClick(event: wx.MouseEvent, x: int, y: int): void
+        +MouseMotion(x: int, y: int): void
+        +MousePassiveMotion(x: int, y: int): void
+        +onMouseWheel(event: wx.MouseEvent): void
+        +draw(): void
+    }
+
+    class Handle{
+        +x: float
+        +y: float
+
+        +draw(): void
+    }
+
+    class SelectedState{
+        +manageStates: ManageStates
+        +handles: list
+
+        +_init_(manageStates: ManageStates): void
+        +selectObject(x: int, y: int): void
+        +Translate(x: int, y: int): void
+        +MouseClick(event: wx.MouseEvent, x: int, y: int): void
+        +MouseMotion(x: int, y: int): void
+        +onMouseWheel(event: wx.MouseEvent): void
+        +calculate_handles(obj: manageStates.objects): void
+        +drawHandles(): void
+        +draw(): void
+    }
+
+    class IdleState{
+        +manageStates: ManageStates
+        
+        +_init_(manageStates: ManageStates): void
+        +selectObject(x: int, y: int): void
+        +MouseClick(event: wx.MouseEvent, x: int, y: int): void
+        +MouseMotion(x: int, y: int): void
+        +MousePassiveMotion(x: int, y: int): void
+        +onMouseWheel(event: wx.MouseEvent): void
+        +draw(): void
+    }
+
+    interface State
+    State <|-- DeleteState
+    State <|-- SelectedState
+    State <|-- IdleState
+    State o-- ManageStates
+
+    ManageStates o-- Object
+    ManageStates o-- IdleState
+    ManageStates o-- SelectedState
+    ManageStates o-- TriangleState
+    ManageStates o-- SquareState
+    ManageStates o-- CircleState
+    ManageStates o-- PolygonState
+    ManageStates o-- DeleteState
+
+    SelectedState *-- Handle
+
+@enduml

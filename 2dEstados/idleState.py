@@ -88,10 +88,6 @@ class IdleState(State):
     # roda do mouse
     def onMouseWheel(self, event):
         print("IdleState - onMouseWheel")
-        if self.ctrl_pressed:
-            rotation = event.GetWheelRotation()
-            # Invertendo a direção do zoom
-            self.manageStates.zoom -= rotation / event.GetWheelDelta() * 0.1
 
 
     # ========================================================

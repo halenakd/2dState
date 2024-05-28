@@ -1,0 +1,30 @@
+
+@startuml Diagrama
+
+    class Shapes {
+        +CIRCLE: int
+        +TRIANGLE: int
+        +SQUARE: int
+        +POLYGON: int
+    }
+
+    class Shape {
+        +points: list
+
+        +_init_(points: list): void
+        +draw(): void
+    }
+
+    class ShapeManager {
+        +shapes: list
+
+        +_init_(): void
+        +add_shape(shape: list): int 
+        +draw_shapes(): void
+        +clear_shapes(): void
+    }
+
+    Shapes o-- Shape
+    ShapeManager *-- Shape
+
+@enduml

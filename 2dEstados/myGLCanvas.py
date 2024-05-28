@@ -36,7 +36,6 @@ class MyGLCanvas(glcanvas.GLCanvas):
         self.right = self.ortho[1]
         self.bottom = -self.ortho[2]
         self.top = self.ortho[3]
-        self.ctrl_pressed = False # para dar zoom com a rodinha do mouse
         self.lastMousePos = None # última posição do mouse utilizada em algumas operações com o mouse
         self.background_color = (1, 1, 1, 1.0) # cor de fundo - branca
         self.dragging = False # para o movimento do mouse pressionado ou solto
@@ -82,9 +81,9 @@ class MyGLCanvas(glcanvas.GLCanvas):
         glMatrixMode(GL_PROJECTION)
         glLoadIdentity()
         if aspect_ratio > 1:
-            glOrtho(-aspect_ratio, aspect_ratio, -1, 1, -1.0, 1.0)
+            glOrtho(-aspect_ratio * self.manageStates.zoom, aspect_ratio * self.manageStates.zoom, -self.manageStates.zoom, self.manageStates.zoom, -1.0, 1.0)
         else:
-            glOrtho(-1, 1, -1/aspect_ratio, 1/aspect_ratio, -1.0, 1.0)
+            glOrtho(-self.manageStates.zoom, self.manageStates.zoom, -self.manageStates.zoom/aspect_ratio, self.manageStates.zoom/aspect_ratio, -1.0, 1.0)
         
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()
@@ -122,14 +121,14 @@ class MyGLCanvas(glcanvas.GLCanvas):
     # Evento de tecla pressionada
     def onKeyDown(self, event):
         if event.GetKeyCode() == wx.WXK_CONTROL:
-            self.ctrl_pressed = True
-        event.Skip()
+            self.manageStates.ctrl_pressed = True
+        #event.Skip()
 
     # Evento de tecla liberada
     def onKeyUp(self, event):
         if event.GetKeyCode() == wx.WXK_CONTROL:
-            self.ctrl_pressed = False
-        event.Skip()
+            self.manageStates.ctrl_pressed = False
+        #event.Skip()
 
 
     # ========================================================
@@ -162,7 +161,14 @@ class MyGLCanvas(glcanvas.GLCanvas):
             self.Refresh()
     
     def onMouseWheel(self, event):
-        self.manageStates.currentState.onMouseWheel(event)
+        if self.manageStates.ctrl_pressed:
+            rotation = event.GetWheelRotation()
+            if rotation > 0:
+                self.manageStates.zoom /= 1.1
+            else:
+                self.manageStates.zoom *= 1.1
+        else:
+            self.manageStates.currentState.onMouseWheel(event)
         self.Refresh()
         
 
