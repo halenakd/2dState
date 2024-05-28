@@ -52,13 +52,6 @@
         +draw(): void
     }
 
-    class Handle{
-        +x: float
-        +y: float
-
-        +draw(): void
-    }
-
     class SelectedState{
         +manageStates: ManageStates
         +handles: list
@@ -87,12 +80,19 @@
     }
 
     interface State
+
+    'Herança
     State <|-- DeleteState
     State <|-- SelectedState
     State <|-- IdleState
+    State <|-- PolygonState
+    State <|-- TriangleState
+    State <|-- SquareState
+    State <|-- CircleState
+
+    'Agregação
     State o-- ManageStates
 
-    ManageStates o-- Object
     ManageStates o-- IdleState
     ManageStates o-- SelectedState
     ManageStates o-- TriangleState
@@ -100,7 +100,5 @@
     ManageStates o-- CircleState
     ManageStates o-- PolygonState
     ManageStates o-- DeleteState
-
-    SelectedState *-- Handle
 
 @enduml
