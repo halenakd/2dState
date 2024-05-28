@@ -138,4 +138,4 @@ class SelectedState(State):
         for obj in self.manageStates.objects:
                 if obj.selected:
                     self.calculate_handles(obj)
-        self.drawHandles()
+        #self.drawHandles()

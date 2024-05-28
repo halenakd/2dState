@@ -8,6 +8,8 @@ from state import State
 from geometries import Object
 import wx
 
+currentPoints = []
+
 # ========================================================
 # PolygonState - ESTADO DE DESENHAR POLÍGONO
 # ========================================================
